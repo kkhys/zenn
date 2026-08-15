@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trend Digest · Architecture</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --color-paper:   #2d3142;
+      --color-ink:     #f5f5f5;
+      --color-muted:   #bfc0c0;
+      --color-accent:  #f08a59;
+      --font-sans:     'Geist', system-ui, sans-serif;
+      --font-serif:    'Instrument Serif', serif;
+      --font-mono:     'Geist Mono', ui-monospace, monospace;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-paper);
+      color: var(--color-ink);
+    }
+
+    /* Type scale and padding are viewport-relative so one file renders at any
+       output resolution: widen the viewport, get a proportionally larger PNG. */
+    .frame {
+      width: 100%;
+      background: var(--color-paper);
+      padding: 3.2vw 3.2vw 2.8vw;
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.88vw;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: 0.6vw;
+    }
+
+    h1 {
+      font-family: var(--font-serif);
+      font-size: 2.67vw;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--color-ink);
+      margin-bottom: 2.4vw;
+    }
+
+    svg { width: 100%; display: block; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <p class="eyebrow">Architecture · Trend Digest</p>
+    <h1>Collect · Write · Build</h1>
+
+    <svg viewBox="0 0 1000 352" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="trends-pipeline-title trends-pipeline-desc">
+      <title id="trends-pipeline-title">Trend Digest pipeline</title>
+      <desc id="trends-pipeline-desc">Architecture diagram showing ten public sources fetched by a Python collector, scored into raw.json, curated and summarized by a Claude Code skill steered by an interest profile, then validated and built by Astro and served from Cloudflare Pages.</desc>
+      <defs>
+        <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+          <circle cx="1" cy="1" r="0.9" fill="rgba(245,245,245,0.10)"/>
+        </pattern>
+        <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#bfc0c0"/></marker>
+        <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#f08a59"/></marker>
+        <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#6a95d8"/></marker>
+      </defs>
+
+      <rect width="100%" height="100%" fill="#2d3142"/>
+      <rect width="100%" height="100%" fill="url(#dots)" opacity="0.55"/>
+
+      <!-- Zones (drawn before arrows and nodes) -->
+      <rect x="40" y="40" width="320" height="112" rx="8" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="176" y="44" width="48" height="12" rx="2" fill="#2d3142"/>
+      <text x="200" y="53" fill="rgba(245,245,245,0.35)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">COLLECT</text>
+
+      <rect x="392" y="40" width="216" height="208" rx="8" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="480" y="44" width="40" height="12" rx="2" fill="#2d3142"/>
+      <text x="500" y="53" fill="rgba(245,245,245,0.35)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">WRITE</text>
+
+      <rect x="640" y="40" width="320" height="112" rx="8" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.10)" stroke-width="0.8"/>
+      <rect x="780" y="44" width="40" height="12" rx="2" fill="#2d3142"/>
+      <text x="800" y="53" fill="rgba(245,245,245,0.35)" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">BUILD</text>
+
+      <!-- Arrows first (behind boxes) -->
+      <line x1="172" y1="104" x2="228" y2="104" stroke="#6a95d8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+      <line x1="348" y1="104" x2="420" y2="104" stroke="#f08a59" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+      <line x1="580" y1="104" x2="652" y2="104" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="788" y1="104" x2="828" y2="104" stroke="#bfc0c0" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="500" y1="168" x2="500" y2="136" stroke="#bfc0c0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+
+      <!-- Arrow labels -->
+      <rect x="180" y="84" width="40" height="12" rx="2" fill="#2d3142"/>
+      <text x="200" y="94" fill="#6a95d8" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">HTTPS</text>
+
+      <rect x="360" y="84" width="48" height="12" rx="2" fill="#2d3142"/>
+      <text x="384" y="94" fill="#f08a59" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">RAW.JSON</text>
+
+      <rect x="588" y="84" width="56" height="12" rx="2" fill="#2d3142"/>
+      <text x="616" y="94" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DAILY JSON</text>
+
+      <rect x="788" y="84" width="40" height="12" rx="2" fill="#2d3142"/>
+      <text x="808" y="94" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">DEPLOY</text>
+
+      <rect x="508" y="144" width="48" height="12" rx="2" fill="#2d3142"/>
+      <text x="532" y="153" fill="#8e98ac" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CRITERIA</text>
+
+      <!-- Node: 10 Sources (external) -->
+      <rect x="52" y="72" width="120" height="64" rx="6" fill="#2d3142"/>
+      <rect x="52" y="72" width="120" height="64" rx="6" fill="rgba(191,192,192,0.10)" stroke="#8e98ac" stroke-width="1"/>
+      <rect x="60" y="80" width="28" height="12" rx="2" fill="transparent" stroke="rgba(142,152,172,0.40)" stroke-width="0.8"/>
+      <text x="74" y="89" fill="#8e98ac" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">EXT</text>
+      <text x="112" y="108" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">10 Sources</text>
+      <text x="112" y="124" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">no auth · rss + api</text>
+
+      <!-- Node: Collector -->
+      <rect x="228" y="72" width="120" height="64" rx="6" fill="#2d3142"/>
+      <rect x="228" y="72" width="120" height="64" rx="6" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+      <rect x="236" y="80" width="24" height="12" rx="2" fill="transparent" stroke="rgba(245,245,245,0.40)" stroke-width="0.8"/>
+      <text x="248" y="89" fill="#f5f5f5" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">PY</text>
+      <text x="340" y="132" fill="rgba(245,245,245,0.06)" font-size="32" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="end">01</text>
+      <text x="288" y="108" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Collector</text>
+      <text x="288" y="124" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">fetch_trends.py</text>
+
+      <!-- Node: Claude Code (focal) -->
+      <rect x="420" y="72" width="160" height="64" rx="6" fill="#2d3142"/>
+      <rect x="420" y="72" width="160" height="64" rx="6" fill="rgba(240,138,89,0.08)" stroke="#f08a59" stroke-width="1"/>
+      <rect x="428" y="80" width="24" height="12" rx="2" fill="transparent" stroke="rgba(240,138,89,0.50)" stroke-width="0.8"/>
+      <text x="440" y="89" fill="#f08a59" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">AI</text>
+      <text x="572" y="132" fill="rgba(240,138,89,0.10)" font-size="32" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="end">02</text>
+      <text x="500" y="108" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Claude Code</text>
+      <text x="500" y="124" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">curate · summarize · write</text>
+
+      <!-- Node: Interest profile (store) -->
+      <rect x="428" y="168" width="144" height="64" rx="6" fill="#2d3142"/>
+      <rect x="428" y="168" width="144" height="64" rx="6" fill="rgba(245,245,245,0.05)" stroke="#bfc0c0" stroke-width="1"/>
+      <rect x="436" y="176" width="32" height="12" rx="2" fill="transparent" stroke="rgba(191,192,192,0.50)" stroke-width="0.8"/>
+      <text x="452" y="185" fill="#bfc0c0" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">CONF</text>
+      <text x="500" y="204" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Interest Profile</text>
+      <text x="500" y="220" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">profile.md</text>
+
+      <!-- Node: Astro -->
+      <rect x="652" y="72" width="136" height="64" rx="6" fill="#2d3142"/>
+      <rect x="652" y="72" width="136" height="64" rx="6" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+      <rect x="660" y="80" width="32" height="12" rx="2" fill="transparent" stroke="rgba(245,245,245,0.40)" stroke-width="0.8"/>
+      <text x="676" y="89" fill="#f5f5f5" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">BUILD</text>
+      <text x="780" y="132" fill="rgba(245,245,245,0.06)" font-size="32" font-weight="600" font-family="'Geist Mono', monospace" text-anchor="end">03</text>
+      <text x="720" y="108" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Astro</text>
+      <text x="720" y="124" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">zod schema gate</text>
+
+      <!-- Node: Cloudflare Pages (cloud) -->
+      <rect x="828" y="72" width="120" height="64" rx="6" fill="#2d3142"/>
+      <rect x="828" y="72" width="120" height="64" rx="6" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.30)" stroke-width="1"/>
+      <rect x="836" y="80" width="32" height="12" rx="2" fill="transparent" stroke="rgba(245,245,245,0.22)" stroke-width="0.8"/>
+      <text x="852" y="89" fill="#8e98ac" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">EDGE</text>
+      <text x="888" y="108" fill="#f5f5f5" font-size="12" font-weight="600" font-family="'Geist', sans-serif" text-anchor="middle">Cloudflare Pages</text>
+      <text x="888" y="124" fill="#bfc0c0" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">trends.kkhys.me</text>
+
+      <!-- Legend strip -->
+      <line x1="40" y1="276" x2="960" y2="276" stroke="rgba(245,245,245,0.10)" stroke-width="0.8"/>
+      <text x="40" y="292" fill="#bfc0c0" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.18em">LEGEND</text>
+
+      <rect x="40" y="308" width="14" height="10" rx="2" fill="rgba(240,138,89,0.08)" stroke="#f08a59" stroke-width="1"/>
+      <text x="60" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Focal / agent</text>
+
+      <rect x="180" y="308" width="14" height="10" rx="2" fill="#393e53" stroke="#f5f5f5" stroke-width="1"/>
+      <text x="200" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Script / build</text>
+
+      <rect x="320" y="308" width="14" height="10" rx="2" fill="rgba(245,245,245,0.05)" stroke="#bfc0c0" stroke-width="1"/>
+      <text x="340" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Config / data</text>
+
+      <rect x="456" y="308" width="14" height="10" rx="2" fill="rgba(245,245,245,0.03)" stroke="rgba(245,245,245,0.30)" stroke-width="1"/>
+      <text x="476" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Edge</text>
+
+      <rect x="540" y="308" width="14" height="10" rx="2" fill="rgba(191,192,192,0.10)" stroke="#8e98ac" stroke-width="1"/>
+      <text x="560" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">External</text>
+
+      <line x1="640" y1="314" x2="668" y2="314" stroke="#6a95d8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+      <text x="676" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">HTTP fetch</text>
+
+      <line x1="760" y1="314" x2="788" y2="314" stroke="#f08a59" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+      <text x="796" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Primary flow</text>
+
+      <line x1="872" y1="314" x2="900" y2="314" stroke="#bfc0c0" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+      <text x="908" y="316" fill="#bfc0c0" font-size="8.5" font-family="'Geist', sans-serif">Passive</text>
+    </svg>
+  </div>
+</body>
+</html>
